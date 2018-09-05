@@ -1,6 +1,3 @@
-/**
- * @author mrdoob / http://mrdoob.com/
- */
 
 function WebGLAttributes( gl ) {
 
@@ -101,7 +98,7 @@ function WebGLAttributes( gl ) {
 
 		if ( attribute.isInterleavedBufferAttribute ) attribute = attribute.data;
 
-		return buffers.get( attribute );
+		return buffers.get( attribute.uuid || attribute );
 
 	}
 
@@ -109,13 +106,13 @@ function WebGLAttributes( gl ) {
 
 		if ( attribute.isInterleavedBufferAttribute ) attribute = attribute.data;
 
-		var data = buffers.get( attribute );
+		var data = buffers.get( attribute.uuid || attribute  );
 
 		if ( data ) {
 
 			gl.deleteBuffer( data.buffer );
 
-			buffers.delete( attribute );
+			buffers.delete( attribute.uuid || attribute  );
 
 		}
 
@@ -125,11 +122,11 @@ function WebGLAttributes( gl ) {
 
 		if ( attribute.isInterleavedBufferAttribute ) attribute = attribute.data;
 
-		var data = buffers.get( attribute );
+		var data = buffers.get( attribute.uuid || attribute  );
 
 		if ( data === undefined ) {
 
-			buffers.set( attribute, createBuffer( attribute, bufferType ) );
+			buffers.set( attribute , createBuffer( attribute, bufferType ) );
 
 		} else if ( data.version < attribute.version ) {
 
@@ -150,6 +147,4 @@ function WebGLAttributes( gl ) {
 	};
 
 }
-
-
 export { WebGLAttributes };
